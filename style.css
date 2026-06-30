@@ -1,4 +1,6 @@
-/* Global Reset */
+/* ==========================================================================
+   1. BASE STYLES
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -10,19 +12,23 @@ html {
 }
 
 body {
-    font-family: var(--font-stack);
+    font-family: var(--font-stack, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
     line-height: 1.6;
-    color: var(--secondary-color);
-    background-color: var(--bg-light);
+    color: #9CD1FC; /* Light ice blue text */
+    background-color: #02223C; /* Deep blue webpage background */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* Header & Navigation */
+/* ==========================================================================
+   2. HEADER & NAVIGATION (Custom Green Theme)
+   ========================================================================== */
 header {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #3E5D32; /* Rich dark green */
+    border-top: 2px solid #D6F599; /* Thin lime-green top border */
+    border-bottom: 2px solid #D6F599; /* Thin lime-green bottom border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -40,7 +46,7 @@ nav {
 nav .logo {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: #ffffff; /* High contrast white logo */
     letter-spacing: -0.5px;
 }
 
@@ -52,19 +58,21 @@ nav ul {
 
 nav ul a {
     text-decoration: none;
-    color: var(--secondary-color);
+    color: rgba(255, 255, 255, 0.85); /* Clean off-white nav text */
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 nav ul a:hover, 
 nav ul a.active {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
+    color: #D6F599; /* Highlights lime-green to match the borders */
+    border-bottom: 2px solid #D6F599;
     padding-bottom: 4px;
 }
 
-/* Structural Layout */
+/* ==========================================================================
+   3. STRUCTURAL CONTAINERS & CARDS
+   ========================================================================== */
 main {
     flex: 1;
 }
@@ -78,13 +86,43 @@ main {
 hr {
     border: 0;
     height: 1px;
-    background: var(--border-color);
+    background: rgba(156, 209, 252, 0.2); /* Soft ice-blue divider line */
     margin: 3rem 0;
 }
 
-/* Typography */
-h1, h2, h3 {
-    color: var(--primary-color);
+.card, 
+.project-item, 
+.contact-form {
+    background: #0b3254; /* Slightly lighter deep blue container fill */
+    padding: 2rem;
+    border-radius: 6px;
+    border: 1px solid rgba(156, 209, 252, 0.2); /* Integrated border contrast */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Two-column grid support */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.card {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: 300px; 
+}
+
+.grid-stacked {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+/* ==========================================================================
+   4. TYPOGRAPHY
+   ========================================================================== */
+h1, h2, h3, h4 {
+    color: #ffffff; /* Headings turned white to pop off the dark theme background */
     margin-bottom: 1rem;
     font-weight: 600;
 }
@@ -93,13 +131,24 @@ h1 {
     font-size: 2.2rem;
 }
 
+.grid .card h3,
+.grid-stacked .card h3,
+.consequence-card h3 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
 .subtitle {
     font-size: 1.1rem;
     margin-bottom: 2.5rem;
-    color: #718096;
+    color: #9CD1FC;
+    opacity: 0.8;
 }
 
-/* Buttons */
+/* ==========================================================================
+   5. BUTTONS
+   ========================================================================== */
 .btn, .btn-secondary {
     display: inline-block;
     padding: 0.75rem 1.5rem;
@@ -112,63 +161,34 @@ h1 {
 }
 
 .btn {
-    background-color: var(--primary-color);
-    color: var(--card-bg);
+    background-color: #9CD1FC; /* Ice blue primary action button */
+    color: #02223C; /* Dark blue button text for visibility */
 }
 
 .btn:hover {
-    background-color: #1a365d;
+    background-color: #ffffff;
 }
 
 .btn-secondary {
     background-color: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    color: #9CD1FC;
+    border: 2px solid #9CD1FC;
     margin-left: 0.5rem;
 }
 
 .btn-secondary:hover {
-    background-color: var(--primary-color);
-    color: var(--card-bg);
+    background-color: #9CD1FC;
+    color: #02223C;
 }
 
-/* Grids & Cards */
-.grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-top: 2.5rem;
-}
-
-.grid-stacked {
-    margin-top: 2rem;
-    width: 100%;
-}
-
-.card {
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-    flex: 1 1 calc(50% - 1rem);
-    min-width: 300px; 
-}
-
-.grid .card h3,
-.grid-stacked .card h3,
-.consequence-card h3 {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-/* Hero Section */
+/* ==========================================================================
+   6. HERO BANNER SECTION
+   ========================================================================== */
 .hero-section {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+    background: linear-gradient(rgba(2, 34, 60, 0.75), rgba(2, 34, 60, 0.75)), 
                 url('assets/booknook.jpg') no-repeat center center;
     background-size: cover;
     text-align: center;
@@ -198,7 +218,9 @@ h1 {
     margin-bottom: 2rem;
 }
 
-/* Project Lists */
+/* ==========================================================================
+   7. LISTS & FORMS
+   ========================================================================== */
 .project-list {
     display: flex;
     flex-direction: column;
@@ -206,31 +228,20 @@ h1 {
 }
 
 .project-item {
-    background: var(--card-bg);
+    border-left: 4px solid #9CD1FC; /* Accent border tab indicator */
     padding: 2.5rem;
-    border-radius: 6px;
-    border-left: 4px solid var(--primary-color);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
 .project-item h2 {
     font-size: 1.5rem;
-    color: #1a202c;
+    color: #ffffff;
 }
 
 .project-item p {
     margin-bottom: 1.5rem;
 }
 
-/* Forms */
-.contact-form {
-    background: var(--card-bg);
-    padding: 2.5rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    margin-top: 1.5rem;
-}
-
+/* Input Fields Styling */
 .form-group {
     margin-bottom: 1.25rem;
 }
@@ -239,28 +250,29 @@ h1 {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #2d3748;
+    color: #ffffff;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(156, 209, 252, 0.3);
     border-radius: 4px;
-    font-family: var(--font-stack);
+    background-color: #02223C;
+    font-family: var(--font-stack, 'Segoe UI', Arial, sans-serif);
     font-size: 1rem;
-    color: var(--secondary-color);
+    color: #ffffff;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
+    border-color: #9CD1FC;
+    box-shadow: 0 0 0 3px rgba(156, 209, 252, 0.2);
 }
 
-/* Classroom Management Content Styles */
+/* Classroom Framework Text Settings */
 .expectations-list {
     margin-top: 1.5rem;
     text-align: left;
@@ -269,7 +281,7 @@ h1 {
 .expectation-item {
     margin-bottom: 2.5rem; 
     padding-bottom: 2rem;
-    border-bottom: 1px dashed var(--border-color);
+    border-bottom: 1px dashed rgba(156, 209, 252, 0.2);
 }
 
 .expectation-item:last-child {
@@ -281,13 +293,13 @@ h1 {
 .expectations-list dt {
     font-size: 1.3rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: #ffffff; 
     margin-bottom: 0.75rem; 
 }
 
 .expectations-list dd {
     font-size: 1rem;
-    color: var(--secondary-color);
+    color: #9CD1FC;
     line-height: 1.6;
     margin-left: 2rem; 
 }
@@ -300,7 +312,7 @@ h1 {
 .step-item {
     margin-bottom: 2rem;
     padding-left: 1.5rem;
-    border-left: 3px solid var(--primary-color);
+    border-left: 3px solid #9CD1FC;
 }
 
 .step-item:last-child {
@@ -310,7 +322,7 @@ h1 {
 .step-item h4 {
     font-size: 1.25rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: #ffffff;
     margin-top: 0;
     margin-bottom: 0.5rem;
     text-transform: uppercase; 
@@ -318,10 +330,7 @@ h1 {
 }
 
 .step-item p {
-    font-size: 1rem;
-    color: var(--secondary-color);
-    line-height: 1.6;
-    margin: 0;
+    color: #9CD1FC;
 }
 
 .consequence-card {
@@ -335,11 +344,14 @@ h1 {
 
 .consequence-list li {
     font-size: 1rem;
-    color: var(--secondary-color);
+    color: #9CD1FC;
     line-height: 1.6;
     margin-bottom: 1rem;
 }
 
+/* ==========================================================================
+   8. MEDIA & GRAPHICS ASSETS
+   ========================================================================== */
 .behavior-dial-container {
     margin: 2rem 0;
     display: flex;
@@ -351,21 +363,23 @@ h1 {
     max-width: 500px;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .resume-preview-img {
     width: 100%;
     max-width: 600px; 
     height: auto;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(156, 209, 252, 0.2);
     border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     display: block;
     margin: 0 auto;  
 }
 
-/* About Me Desktop Layout Base */
+/* ==========================================================================
+   9. ABOUT ME LAYOUT BASE
+   ========================================================================== */
 .about-intro {
     display: flex;
     align-items: flex-start;
@@ -386,11 +400,13 @@ h1 {
     height: 165px;         
     object-fit: cover;     
     border-radius: 4px;    
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(156, 209, 252, 0.2);
     display: block;
 }
 
-/* Floating Back to Top Button */
+/* ==========================================================================
+   10. INTERACTIVE & FOOTER SEGMENTS
+   ========================================================================== */
 a.back-to-top {
     display: inline-block;
     visibility: visible;
@@ -405,8 +421,8 @@ a.back-to-top {
     font-weight: bold;
     border-radius: 4px;
     z-index: 99999;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease; /* Enables the smooth hover lift animation */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease;
 }
 
 .back-to-top:hover {
@@ -414,17 +430,21 @@ a.back-to-top {
     color: #ffffff;
 }
 
-/* Footer Element */
 footer {
-    background-color: var(--card-bg);
-    border-top: 1px solid var(--border-color);
+    background-color: #3E5D32; /* Rich dark green */
+    border-top: 2px solid #D6F599; /* Thin lime-green top border */
+    border-bottom: 2px solid #D6F599; /* Thin lime-green bottom border */
+    color: #ffffff; /* Crisp white copyright text */
     text-align: center;
     padding: 2rem;
     margin-top: auto;
     font-size: 0.9rem;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
 }
 
-/* Responsive Tablet & Mobile Media Breakpoint */
+/* ==========================================================================
+   11. RESPONSIVE TABLET & MOBILE MEDIA BREAKPOINTS
+   ========================================================================== */
 @media (max-width: 768px) {
     .about-intro {
         flex-direction: row;
