@@ -1,0 +1,697 @@
+/* ==========================================================================
+   1. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    line-height: 1.6;
+    color: #9CD1FC; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    
+    /* Perfect Fixed Background Layout */
+    background-image: linear-gradient(rgba(202, 119, 16, 0.8), rgba(60, 28, 2, 0.8)), 
+                      url('assets/booknook.jpg');
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* --- ADDED: Universal high-contrast drop shadow for ALL text --- */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3), 
+                 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Background of the scrollbar track */
+::-webkit-scrollbar-track {
+    background: #06223b; 
+}
+
+/* The draggable scroll handle */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#103f66, #06223b); 
+    border-radius: 6px;
+    border: 2px solid #06223b; /* Creates a clean gap around the handle */
+}
+
+/* Glow effect when user clicks the scrollbar */
+::-webkit-scrollbar-thumb:hover {
+    background: #16538c; 
+}
+
+::-moz-selection {
+    background-color: rgba(156, 209, 252, 0.3); /* Translucent ice blue highlight */
+    color: #ffffff;                             /* Crisp white text while highlighted */
+}
+
+::selection {
+    background-color: rgba(156, 209, 252, 0.3); 
+    color: #ffffff; 
+}
+
+/* Removes the ugly default orange/blue outline for keyboard users, replacing it with a clean glow */
+*:focus-visible {
+    outline: 2px solid #9CD1FC;
+    outline-offset: 3px;
+}
+h1, h2, h3, p, dt, dd {
+    text-wrap: balance;   /* Perfectly balances headline lengths across lines */
+    text-wrap: pretty;    /* Explicitly commands the browser engine to never leave a single orphan word */
+}
+
+/* ==========================================================================
+   2. HEADER & NAVIGATION (Floating Layer)
+   ========================================================================== */
+header {
+    background-color: #3E5D32; /* Solid rich dark green prevents text bleed */
+    border-top: 2px solid #D6F599; /* Thin lime-green top border */
+    border-bottom: 2px solid #D6F599; /* Thin lime-green bottom border */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Keeps nav floating safely on top of scrolling main text */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+}
+
+nav .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff; /* High contrast white logo */
+    letter-spacing: -0.5px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+nav ul a {
+    position: relative;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    transition: color 0.3s ease;
+}
+
+/* Create the invisible baseline */
+nav ul a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -6px;
+    left: 0;
+    background-color: #f79d15; /* Matches your light ice blue theme */
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+/* Slide it open on hover */
+nav ul a:hover::after,
+nav ul a.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+nav ul a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    /* Keeps navigation clean and easy to scan at a glance */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+nav ul a:hover, 
+nav ul a.active {
+    color: #D6F599; /* Highlights lime-green to match the borders */
+    border-bottom: 2px solid #9CD1FC; /* Subtle ice-blue underline for active nav items */
+    padding-bottom: 4px;
+}
+
+/* Container to align the icon and text side-by-side */
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Smooth spacing between the icon and her name */
+}
+
+/* Precise sizing and crisp rendering for the header icon */
+.header-icon {
+    width: 50px;  /* Small, elegant size that matches the text height */
+    height: 50px;
+    object-fit: contain;
+    border-radius: 4px; /* Optional: smooths the corners if your image is square */
+}
+
+/* Ensures the text inherits your existing premium typography styles */
+.site-title {
+    font-family: Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   3. STRUCTURAL CONTAINERS & CARDS
+   ========================================================================== */
+main {
+    flex: 1;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    flex: 1;
+
+    /* --- ADDED: Smooth Page Transition --- */
+    animation: fadeInPage 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* The page transition animation logic */
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+        transform: translateY(15px); /* Starts slightly lower */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* Smoothly glides into place */
+    }
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: rgba(156, 209, 252, 0.2); /* Soft ice-blue divider line */
+    margin: 3rem 0;
+}
+
+.card, 
+.project-item, 
+.contact-form {
+    background: radial-gradient(circle at center, #103f66 0%, #06223b 100%); 
+    padding: 2rem;
+    border-radius: 6px;
+    border: 1px solid rgba(156, 209, 252, 0.15);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 
+                0 10px 25px rgba(0, 0, 0, 0.55);
+
+    /* --- ADDED: Scroll-Driven Reveal with a slight bounce elasticity --- */
+    view-timeline-name: --cardReveal;
+    view-timeline-axis: block;
+    animation-name: bounceInCard;
+    animation-fill-mode: both;
+    animation-timeline: --cardReveal;
+    animation-range: entry 10% cover 30%; /* Triggers right as the card enters the screen */
+}
+
+/* The elastic bounce animation logic */
+@keyframes bounceInCard {
+    0% {
+        opacity: 0;
+        transform: scale(0.93) translateY(40px);
+    }
+    70% {
+        opacity: 0.85;
+        transform: scale(1.01) translateY(-4px); /* Minor over-shoot to create the elastic "bounce" */
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+/* Two-column grid support */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.card {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: 300px; 
+}
+
+.grid-stacked {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.card, 
+.project-item {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+/* Lift and glow on mouse hover */
+.card:hover, 
+.project-item:hover {
+    transform: translateY(-5px) scale(1.01); /* Soft lift up */
+    border-color: rgba(156, 209, 252, 0.4);   /* Brightens the frame border slightly */
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 
+                0 15px 35px rgba(0, 0, 0, 0.7);  /* Deepens the outer drop shadow */
+}
+
+/* ==========================================================================
+   4. TYPOGRAPHY
+   ========================================================================== */
+h1, h2, h3, h4 {
+    color: #ffffff; /* Headings pop clearly off the background overlay */
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.2rem;
+}
+
+.grid .card h3,
+.grid-stacked .card h3,
+.consequence-card h3 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    color: #9CD1FC;
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   5. BUTTONS
+   ========================================================================== */
+.btn, .btn-secondary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.1s ease, color 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn {
+    background-color: #9CD1FC; /* Ice blue primary action button */
+    color: #02223C; /* Dark blue button text for high visibility */
+}
+
+.btn:hover {
+    background-color: #ffffff;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #9CD1FC;
+    border: 2px solid #9CD1FC;
+}
+
+.btn-secondary:hover {
+    background-color: #9CD1FC;
+    color: #02223C;
+}
+
+/* ==========================================================================
+   6. LISTS & FORMS
+   ========================================================================== */
+.project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.project-item {
+    border-left: none; /* Removes the random blue line completely */
+    padding: 2rem;     /* Evens out the padding on all sides */
+}
+
+.project-item h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.project-item p {
+    margin-bottom: 1.5rem;
+}
+
+/* Input Fields Styling */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgba(156, 209, 252, 0.3);
+    border-radius: 4px;
+    background-color: #02223C;
+    font-family: var(--font-stack, 'Segoe UI', Arial, sans-serif);
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #9CD1FC;
+    box-shadow: 0 0 0 3px rgba(156, 209, 252, 0.2);
+}
+
+/* Classroom Framework Text Settings */
+.expectations-list {
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+.expectation-item {
+    margin-bottom: 2.5rem; 
+    padding-bottom: 2rem;
+    border-bottom: 1px dashed rgba(156, 209, 252, 0.2);
+}
+
+.expectation-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.expectations-list dt {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffffff; 
+    margin-bottom: 0.75rem; 
+}
+
+.expectations-list dd {
+    font-size: 1rem;
+    color: #9CD1FC;
+    line-height: 1.6;
+    margin-left: 2rem; 
+}
+
+.teaching-steps {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.step-item {
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid #9CD1FC;
+}
+
+.step-item:last-child {
+    margin-bottom: 0;
+}
+
+.step-item h4 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+}
+
+.step-item p {
+    color: #9CD1FC;
+}
+
+.consequence-card {
+    text-align: left;
+}
+
+.consequence-list {
+    margin: 1rem 0 1.5rem 1.25rem;
+    padding: 0;
+}
+
+.consequence-list li {
+    font-size: 1rem;
+    color: #9CD1FC;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: rgba(2, 34, 60, 0.6);
+    border: 1px solid rgba(156, 209, 252, 0.2);
+    border-radius: 4px;
+    color: #ffffff;
+    font-family: Georgia, serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Smooth ambient glow when active */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #9CD1FC;
+    box-shadow: 0 0 10px rgba(156, 209, 252, 0.3);
+}
+
+/* ==========================================================================
+   7. MEDIA & GRAPHICS ASSETS
+   ========================================================================== */
+.behavior-dial-container {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.behavior-dial-img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.resume-preview-img {
+    width: 100%;
+    max-width: 600px; 
+    height: auto;
+    border: 1px solid rgba(156, 209, 252, 0.2);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: block;
+    margin: 0 auto;  
+}
+
+.preview-badge {
+    display: block;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #D6F599;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.caption-text {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #9CD1FC;
+    opacity: 0.8;
+    margin-top: 1rem;
+}
+
+/* ==========================================================================
+   8. ABOUT ME LAYOUT BASE
+   ========================================================================== */
+.about-intro {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.about-intro-image {
+    flex: 0 0 auto;
+}
+
+.about-intro-content {
+    flex: 1 1 0;
+}
+
+.portfolio-img {
+    width: 125px;          
+    height: 165px;         
+    object-fit: cover;     
+    border-radius: 4px;    
+    border: 1px solid rgba(156, 209, 252, 0.2);
+    display: block;
+}
+
+/* ==========================================================================
+   9. INTERACTIVE & FOOTER SEGMENTS (Solid Bottom Layer)
+   ========================================================================== */
+a.back-to-top {
+    display: inline-block;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 12px 20px;
+    background: #000000;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    z-index: 99999;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease;
+}
+
+.back-to-top:hover {
+    transform: translateY(-4px);
+    color: #ffffff;
+}
+
+footer {
+    background-color: #3E5D32; /* Solid rich dark green prevents text bleed */
+    border-top: 2px solid #D6F599; /* Thin lime-green top border */
+    border-bottom: 2px solid #D6F599; /* Thin lime-green bottom border */
+    color: #ffffff; /* Crisp white copyright text */
+    text-align: center;
+    padding: 2rem;
+    margin-top: auto;
+    font-size: 0.9rem;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 100; /* Keeps footer floating safely on top of scrolling main text */
+}
+
+/* ==========================================================================
+   10. RESPONSIVE TABLET & MOBILE MEDIA BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 768px) {
+    body {
+        /* Disables fixed background scrolling mechanics on weak mobile devices */
+        background-attachment: scroll; 
+    }
+
+    .about-intro {
+        flex-direction: row;
+        align-items: flex-start;   
+        text-align: left;
+        gap: 1.2rem;               
+    }
+
+    .about-intro-image {
+        flex: 0 0 110px;
+    }
+
+    .portfolio-img {
+        width: 110px;              
+        height: 145px;             
+    }
+
+    .about-intro-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .about-intro-content p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+}
+
+/* ==========================================================================
+   11. HOMEPAGE RECENTERING & CARD FOCUS
+   ========================================================================== */
+body.home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes header and footer to the absolute edges */
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+body.home-page main.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* Centers the card horizontally */
+    justify-content: center;   /* Centers the card vertically */
+    flex-grow: 1;              /* Allows the container to hold the center space */
+    padding: 4rem 2rem;        /* Generous spacing at top/bottom for background to show */
+    width: 100%;
+}
+
+/* Forces the card itself to stay a clean size and centers its internal elements */
+body.home-page main.container .card {
+    text-align: center;        /* Centers all headings and paragraphs inside the card */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 750px;          /* Perfect width boundary for professional text reading */
+    padding: 3.5rem 2.5rem;    /* Luxurious internal breathing room */
+    margin: auto;              /* Locks the card into the dead geometric center */
+}
+
+/* Homepage Title Styling inside the card */
+body.home-page h1 {
+    font-size: 2.6rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #ffffff;            /* Keeps title color unified with card palette */
+}
+
+/* Homepage Subtitle Styling inside the card */
+body.home-page .subtitle {
+    color: #9CD1FC;            /* Pure white text for reading contrast */
+    opacity: 1;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    text-align: center;
+    margin: 0;
+}
